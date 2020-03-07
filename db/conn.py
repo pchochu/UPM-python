@@ -54,7 +54,7 @@ class DB(object):
                     );
 
                     CREATE TABLE token_lexicon(
-                    attribute_id serial PRIMARY KEY,
+                    token_id serial PRIMARY KEY,
                     token VARCHAR (30) NOT NULL,
                     frequency NUMERIC NOT NULL,
                     semantics VARCHAR (10) NOT NULL
@@ -92,3 +92,20 @@ class DB(object):
                 cursor.execute(sql)
                 self.conn.commit()
 
+    def getIdOfTokenByToken(self, token):
+        return self.query("SELECT token_id from token_lexicon WHERE token='{}'".format(token))[0][0]
+    
+    def getFrequencyOfTokenByToken(self, token):
+        return self.query("SELECT frequency from token_lexicon WHERE token='{}'".format(token))[0][0]
+    
+    def getSemanticsOfTokenByToken(self, token):
+        return self.query("SELECT semantics from token_lexicon WHERE token='{}'".format(token))[0][0]
+    
+    def getTokenStringByID(self, id):
+        return self.query("SELECT token from token_lexicon WHERE token_id={}".format(id))[0][0]
+
+    def getTokenCountByID(self, id):
+        return self.query("SELECT frequency from token_lexicon WHERE token_id={}".format(id))[0][0]
+    
+    def getTokenSemanticByID(self, id):
+        return self.query("SELECT semantics from token_lexicon WHERE token_id={}".format(id))[0][0]
