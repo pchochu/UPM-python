@@ -80,7 +80,7 @@ class token_lexicon(object):
         self.products = [item.lower() for item in self.products]
     
     def removePunctuation(self):
-        regex = r'[^A-Za-z0-9.,/-\\+]+'
+        regex = r'[^A-Za-z0-9.,/\-\\+]+'
         self.products = [re.sub(regex, ' ', item) for item in self.products]
 
     def uniqueWordsInString(self, string):

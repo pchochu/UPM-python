@@ -3,7 +3,7 @@ from token_lexicon import token_lexicon
 from combination_lexicon import combination_lexicon
 
 db = DB()
-# db.createDatabase('ref_cellphones_5.2.2020.json')
+db.createDatabase('ref_cellphones_5.2.2020.json')
 
 mobiles = db.getCellphones()
 attributes = db.getAttributes()
