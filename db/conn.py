@@ -40,7 +40,7 @@ class DB(object):
         with self.conn.cursor() as cursor:
             sql = """DROP TABLE cellphones;
                     DROP TABLE attributes;
-                    DROP TABLE token_lexicon
+                    DROP TABLE token_lexicon;
 
                     CREATE TABLE cellphones(
                     cellphone_id serial PRIMARY KEY,

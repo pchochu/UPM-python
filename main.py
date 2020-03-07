@@ -3,7 +3,7 @@ from token_lexicon import token_lexicon
 from combination_lexicon import combination_lexicon
 
 db = DB()
-# db.createDatabase()
+# db.createDatabase('ref_cellphones_5.2.2020.json')
 
 mobiles = db.getCellphones()
 attributes = db.getAttributes()
@@ -18,7 +18,7 @@ for attribute in attributes:
 
 tl = token_lexicon(cellphones, attributesList)
 products = tl.products
-# db.insertIntoTokenLexicon(tl.tokenLexicon)
+db.insertIntoTokenLexicon(tl.tokenLexicon)
 cl = combination_lexicon(products)
 
 del db

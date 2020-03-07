@@ -70,7 +70,8 @@ class token_lexicon(object):
         self.toLower()
         self.removePunctuation()
         self.removeDuplicateTokens()
-        self.removeWhiteSpaceBeforeProductAttribute()        
+        self.removeWhiteSpaceBeforeProductAttribute()   
+        self.removePlus()     
 
     def removeMultipleWhiteSpaces(self):
         self.product = [re.sub(' +', ' ',item) for item in self.products]
@@ -79,7 +80,7 @@ class token_lexicon(object):
         self.products = [item.lower() for item in self.products]
     
     def removePunctuation(self):
-        regex = '[^A-Za-z0-9.,/-]+'
+        regex = r'[^A-Za-z0-9.,/-\\+]+'
         self.products = [re.sub(regex, ' ', item) for item in self.products]
 
     def uniqueWordsInString(self, string):
@@ -99,4 +100,13 @@ class token_lexicon(object):
 
     def removeWhiteSpaceBeforeProductAttribute(self):
         self.products = [self.removeWhiteSpace(item) for item in self.products]
+
+    def removePlusStation(self, product):
+        if '+ station' in product:
+            return product.split('+')[0]
+        
+        return product
+
+    def removePlus(self):
+        self.products = [self.removePlusStation(item) for item in self.products]
 
