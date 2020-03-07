@@ -16,5 +16,6 @@ for attribute in attributes:
     attributesList.append(attribute[1])
 
 tl = token_lexicon(cellphones, attributesList)
+db.insertIntoTokenLexicon(tl.tokenLexicon)
 
 del db

@@ -40,6 +40,7 @@ class DB(object):
         with self.conn.cursor() as cursor:
             sql = """DROP TABLE cellphones;
                     DROP TABLE attributes;
+                    DROP TABLE token_lexicon
 
                     CREATE TABLE cellphones(
                     cellphone_id serial PRIMARY KEY,
@@ -50,6 +51,13 @@ class DB(object):
                     CREATE TABLE attributes(
                     attribute_id serial PRIMARY KEY,
                     attribute VARCHAR (10) NOT NULL
+                    );
+
+                    CREATE TABLE token_lexicon(
+                    attribute_id serial PRIMARY KEY,
+                    token VARCHAR (30) NOT NULL,
+                    frequency NUMERIC NOT NULL,
+                    semantics VARCHAR (10) NOT NULL
                     );
                     """
             cursor.execute(sql)
@@ -71,6 +79,16 @@ class DB(object):
         for a in attributes:
             with self.conn.cursor() as cursor:
                 sql = "INSERT INTO attributes(attribute) VALUES('{}');".format(a)
+                cursor.execute(sql)
+                self.conn.commit()
+
+    def insertIntoTokenLexicon(self, lexicon):
+        for token in lexicon:
+            with self.conn.cursor() as cursor:
+                token = token
+                frequency = lexicon[token]['count']
+                semantics = lexicon[token]['semantic']
+                sql = "INSERT INTO token_lexicon(token, frequency, semantics) VALUES('{}', {}, '{}');".format(token, frequency, semantics)
                 cursor.execute(sql)
                 self.conn.commit()
 
