@@ -19,6 +19,8 @@ for attribute in attributes:
 tl = token_lexicon(cellphones, attributesList)
 products = tl.products
 db.insertIntoTokenLexicon(tl.tokenLexicon)
+
 cl = combination_lexicon(products)
+db.insertIntoCombinationLexicon(cl.combinationLexicon)
 
 del db

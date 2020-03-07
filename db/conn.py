@@ -41,6 +41,7 @@ class DB(object):
             sql = """DROP TABLE cellphones;
                     DROP TABLE attributes;
                     DROP TABLE token_lexicon;
+                    DROP TABLE combination_lexicon;
 
                     CREATE TABLE cellphones(
                     cellphone_id serial PRIMARY KEY,
@@ -58,6 +59,13 @@ class DB(object):
                     token VARCHAR (30) NOT NULL,
                     frequency NUMERIC NOT NULL,
                     semantics VARCHAR (10) NOT NULL
+                    );
+
+                    CREATE TABLE combination_lexicon(
+                    combination_signature_id VARCHAR(30) NOT NULL,
+                    combination VARCHAR (50) NOT NULL,
+                    frequency NUMERIC NOT NULL,
+                    distance NUMERIC NOT NULL
                     );
                     """
             cursor.execute(sql)
@@ -89,6 +97,17 @@ class DB(object):
                 frequency = lexicon[token]['count']
                 semantics = lexicon[token]['semantic']
                 sql = "INSERT INTO token_lexicon(token, frequency, semantics) VALUES('{}', {}, '{}');".format(token, frequency, semantics)
+                cursor.execute(sql)
+                self.conn.commit()
+
+    def insertIntoCombinationLexicon(self, lexicon):
+        for signature in lexicon:
+            with self.conn.cursor() as cursor:
+                signature = signature
+                frequency = lexicon[signature]['count']
+                combination = lexicon[signature]['combination']
+                distance = lexicon[signature]['distance']
+                sql = "INSERT INTO combination_lexicon(combination_signature_id, combination, frequency, distance) VALUES('{}', $${}$$, {}, {});".format(signature, combination, frequency, distance)
                 cursor.execute(sql)
                 self.conn.commit()
 
